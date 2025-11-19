@@ -1,4 +1,5 @@
 import GridShape from "@/components/common/GridShape";
+import { UserProvider } from "@/context/user-context";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

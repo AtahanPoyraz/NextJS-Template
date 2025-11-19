@@ -1,13 +1,14 @@
 "use client";
-import { ThemeToggleButton } from "@/components/common/ThemeToggleButton";
 import NotificationDropdown from "@/components/header/NotificationDropdown";
-import UserDropdown from "@/components/header/UserDropdown";
+import UserDropdown from "@/components/header/user-drop-down";
 import { useSidebar } from "@/context/side-bar-context";
+import { useUser } from "@/hooks/use-user";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
 const AppHeader: React.FC = () => {
+  const { user } = useUser();
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
 
   const { isMobileOpen, toggleSidebar, toggleMobileSidebar } = useSidebar();
@@ -108,13 +109,7 @@ const AppHeader: React.FC = () => {
             isApplicationMenuOpen ? "flex" : "hidden"
           } items-center justify-between w-full gap-4 px-5 py-4 lg:flex shadow-theme-md lg:justify-end lg:px-0 lg:shadow-none`}
         >
-          <div className="flex items-center gap-2 2xsm:gap-3" >
-            {/*For theme selection */}
-            {/*<ThemeToggleButton/>*/}
-
-            <NotificationDropdown />
-          </div>
-          <UserDropdown />
+          {user && <UserDropdown user={user} />}
         </div>
       </div>
     </header>

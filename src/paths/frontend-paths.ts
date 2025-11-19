@@ -6,6 +6,10 @@ export const FrontendPaths = {
         "signIn": `${frontendUrl}/sign-in`,
     },
     "user": {
-        "me": `${frontendUrl}/me`
+        "profile": `${frontendUrl}/profile`
     },
+    "target": {
+        
+    },
+    "settings": `${frontendUrl}/settings`,
 }
