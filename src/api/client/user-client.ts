@@ -1,10 +1,10 @@
 import axios from "axios";
-import { GenericResponse } from "../dto/generic-response";
+import { CreateGenericResponse, GenericResponse } from "../dto/generic-response";
 import { User } from "@/types/user-type";
 import { BackendPaths } from "@/paths/backend-paths";
 
 class UserClient {
-  async Me(): Promise<{ data?: User; error?: string }> {
+  async Me(): Promise<{ genericResponse?: GenericResponse<User>, error?: string }> {
     try {
       const response = await axios.get<GenericResponse<User>>(
           BackendPaths.user.me, 
@@ -12,10 +12,23 @@ class UserClient {
               withCredentials: true,
           }
       );
-      return { data: response.data.data };
+      return { 
+        genericResponse: CreateGenericResponse<User>(
+            response.status,
+            response.data.data,
+            response.data.message,
+        ),
+      };
   
-    } catch (err: any) {
-      return { error: err.response?.data?.message || "Unknown error" };
+    } catch (e: any) {
+      return { 
+        genericResponse: CreateGenericResponse<any>(
+            e.response?.status ?? 500,
+            null,
+            e.response?.data?.message || "Unknown error"
+        ),
+        error: e.response?.data?.message || "Unknown error" 
+    };
     }
   } 
 }
